@@ -85,7 +85,7 @@ The idle baseline should be recorded once per session under similar system condi
 
 Run the following command to collect an idle baseline:
 ```
-& "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\idle.csv -cmd "python -c `"import time; time.sleep(30)`""
+& "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\idle.csv -cmd "cmd /c timeout /t 30 /nobreak"
 ```
 This produces: 
 ```logs/idle.csv```
