@@ -74,7 +74,7 @@ Power measurments were collected using Intel Power Gadget on Windows
    ```
 3. Run experiment with Intel Power Gadget:
    ```
-   & "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\run_001_A2B.csv -cmd "python experiment_protocol.py --run-id 001 --mode A2B"
+   & "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file data\raw\power\run_001_A2B.csv -cmd "python experiment_protocol.py --run-id 001 --mode A2B"
    ```
 ### Idle Power Baseline
 
@@ -85,7 +85,7 @@ The idle baseline should be recorded once per session under similar system condi
 
 Run the following command to collect an idle baseline:
 ```
-& "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\idle.csv -cmd "cmd /c timeout /t 30 /nobreak"
+& "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file data\raw\power\idle.csv -cmd "cmd /c timeout /t 30 /nobreak"
 ```
 This produces: 
 ```logs/idle.csv```
