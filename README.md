@@ -7,7 +7,8 @@ This project implements a framework for measuring how forced tokens affect the o
 * Windows 11
 * Python 3.9+
 * Local GGUF language model compatible with llama-cpp-python
-#### Python Libraries:
+  
+Python Libraries:
 * llama-cpp-python
 * huggingface_hub
 ### Installation
@@ -28,4 +29,17 @@ This project implements a framework for measuring how forced tokens affect the o
 4. Install dependencies (CPU wheels)
    ```
    pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+   ```
+### Model Download
+1. Authenticate with Hugging Face and accept the model license
+   ```
+   hf auth login
+   ```
+2. Download model:
+   ```
+   hf download bartowski/Meta-Llama-3-8B-Instruct-GGUF Meta-Llama-3-8B-Instruct-Q4_K_M.gguf --local-dir models
+   ```
+   After completion, the model should be located at:
+   ```
+   models/Meta-Llama-3-8B-Instruct-Q4_K_M.gguf
    ```
