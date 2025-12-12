@@ -75,5 +75,37 @@ Power measurments were collected using Intel Power Gadget on Windows
    ```
    & "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\run_001_A2B.csv -cmd "python experiment_protocol.py --run-id 001 --mode A2B"
    ```
+### Idle Power Baseline
+
+To isolate model-related energy usage, an idle CPU power baseline is measured and subtracted from each experimental run.
+
+The idle baseline should be recorded once per session under similar system conditions
+(same power plan, plugged in, minimal background activity).
+
+Run the following command to collect an idle baseline:
+```
+& "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\idle.csv -cmd "python -c ""import time; time.sleep(30)"""
+```
+This produces: ```logs/idle.csv```
+Idle power is subtracted during aggregation to compute net power and net energy.
+
+### Aggregating Results
+
+After running experiments, all per-run summaries and power logs can be aggregated into a single results table.
+
+The aggregation step:
+* reads per-run summary CSV files
+* reads Intel Power Gadget power logs
+* subtracts idle power
+* computes net energy and net average power
+
+Run:
+```
+python aggregate_results.py
+```
+This produces ```logs/aggregate_results.csv```
+The aggregated file contains one row per run and includes entropy metrics, power usage, and idle-subtracted energy values.
+
+
 ## License
-This project is licensed under the MIT licesnse - see the LICENSE file for details
+This project is licensed under the MIT license - see the LICENSE file for details
