@@ -205,7 +205,7 @@ def main():
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     # ---- NEW: load idle baseline ----
-    idle_path = LOGS_DIR / "idle.csv"
+    idle_path = POWER_DIR / "idle.csv"
     idle_avg_power_W = None
     if idle_path.exists():
         idle = parse_power_csv(idle_path)
@@ -296,6 +296,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
