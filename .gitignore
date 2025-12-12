@@ -28,6 +28,8 @@ results/
 *.log
 *.csv
 summary_*.txt
+# Raw experimental data (machine-specific, large)
+data/raw/
 
 # -------------------------------------------------
 # IDE / OS files
