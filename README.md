@@ -55,7 +55,7 @@ Python Libraries:
    ```
 3. Run the experiment:
    ```
-   python experiment_protocol.py --run id 001 --mode A2B
+   python experiment_protocol.py --run-id 001 --mode A2B
    ```
 
 #### Execution modes
