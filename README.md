@@ -76,4 +76,4 @@ Power measurments were collected using Intel Power Gadget on Windows
    & "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\run_001_A2B.csv -cmd "python experiment_protocol.py --run-id 001 --mode A2B"
    ```
 ## License
-This project is licensed under the MIT licesnse - see the LICENSE.md file for details
+This project is licensed under the MIT licesnse - see the LICENSE file for details
