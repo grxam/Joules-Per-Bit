@@ -72,9 +72,6 @@ def _pick_col(headers, must_contain_any, prefer_contain_any=()):
 
 
 def parse_power_csv(path: Path) -> dict:
-    m = POWER_RE.match(path.name)
-    if not m:
-        raise ValueError(f"Unexpected powerlog filename: {path.name}")
 
     out = {
         "avg_power_W": None,
@@ -159,6 +156,15 @@ def parse_power_csv(path: Path) -> dict:
 def main():
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
+    # ---- NEW: load idle baseline ----
+    idle_path = LOGS_DIR / "idle.csv"
+    idle_avg_power_W = None
+    if idle_path.exists():
+        idle = parse_power_csv(idle_path)
+        idle_avg_power_W = idle.get("avg_power_W")
+    else:
+        print("WARNING: logs/idle.csv not found. Net power/energy will be blank.")
+
     summary_files = sorted(LOGS_DIR.glob("summary_*_*.csv"))
     power_files = {p.name: p for p in LOGS_DIR.glob("run_*_*.csv")}
 
@@ -181,13 +187,27 @@ def main():
                 "time_col_used": None,
             }
 
+        # ---- NEW: compute net (idle-subtracted) metrics ----
+        net_avg_power_W = None
+        net_energy_J = None
+
+        if (p["avg_power_W"] is not None) and (idle_avg_power_W is not None):
+            net_avg_power_W = p["avg_power_W"] - idle_avg_power_W
+
+        if (p["energy_J"] is not None) and (idle_avg_power_W is not None) and (p["duration_s"] is not None):
+            net_energy_J = p["energy_J"] - (idle_avg_power_W * p["duration_s"])
+
         rows.append({
             "run_id": s["run_id"],
             "mode": s["mode"],
 
+            "idle_avg_power_W": idle_avg_power_W,
             "energy_J": p["energy_J"],
             "avg_power_W": p["avg_power_W"],
             "duration_s": p["duration_s"],
+
+            "net_energy_J": net_energy_J,
+            "net_avg_power_W": net_avg_power_W,
 
             "H_before_A2B_bits": s["H_before_A2B_bits"],
             "H_after_A2B_bits": s["H_after_A2B_bits"],
@@ -207,7 +227,9 @@ def main():
 
     fieldnames = [
         "run_id", "mode",
+        "idle_avg_power_W",
         "energy_J", "avg_power_W", "duration_s",
+        "net_energy_J", "net_avg_power_W",
         "H_before_A2B_bits", "H_after_A2B_bits", "delta_H_A2B_bits",
         "H_before_B2A_bits", "H_after_B2A_bits", "delta_H_B2A_bits",
         "order_effect_bits",
@@ -223,7 +245,9 @@ def main():
     print(f"Wrote {len(rows)} rows to: {OUTPUT_CSV}")
 
 
+
 if __name__ == "__main__":
     main()
+
 
 
