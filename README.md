@@ -21,3 +21,11 @@ This project implements a framework for measuring how forced tokens affect the o
    python -m venv .venv
    . .\.venv\Scripts\Activate.ps1
    ```
+3. Upgrade pip:
+   ```
+   python -m pip install --upgrade pip
+   ```
+4. Install dependencies (CPU wheels)
+   ```
+   
+   ```
