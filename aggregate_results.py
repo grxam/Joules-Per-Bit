@@ -1,3 +1,46 @@
+"""
+aggregate_results.py
+
+Aggregates per-run entropy summaries and external power telemetry logs into
+a single analysis-ready CSV file.
+
+This script performs the following steps:
+    1. Reads per-run summary CSV files produced by experiment_protocol.py
+       (summary_<RUN_ID>_<MODE>.csv)
+    2. Matches each summary file to a corresponding Intel Power Gadget log
+       (run_<RUN_ID>_<MODE>.csv), if available
+    3. Parses power telemetry to compute:
+           - average power (W)
+           - run duration (s)
+           - total energy (J)
+    4. Optionally loads an idle baseline (logs/idle.csv) and subtracts it to
+       compute net (idle-subtracted) power and energy
+    5. Writes a consolidated CSV containing one row per run
+
+Power logs are parsed defensively using heuristic column detection to support
+variations in Intel Power Gadget CSV formats. Energy is computed by numerical
+integration of power over time when possible, with a fallback estimate using
+average power multiplied by duration.
+
+If no idle baseline is found, net power and net energy fields are left blank
+and a warning is emitted.
+
+Outputs:
+    logs/aggregate_results.csv
+
+Assumptions and limitations:
+    - Idle baseline represents steady-state system power under similar
+      conditions (same power plan, minimal background load)
+    - Sampling rates between run logs and idle logs may differ; idle subtraction
+      uses average idle power multiplied by run duration
+    - This script does not validate experimental correctness, only aggregates
+      available data
+
+Intended use:
+    Post-processing and analysis of entropy and power measurements for
+    order-dependent forced-token intervention experiments.
+"""
+
 import csv
 import re
 from pathlib import Path
@@ -248,6 +291,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
