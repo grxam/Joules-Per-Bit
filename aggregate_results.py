@@ -202,6 +202,7 @@ def parse_power_csv(path: Path) -> dict:
 
 
 def main():
+    AGG_DIR.mkdir(parents=True, exist_ok=True)
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     # ---- NEW: load idle baseline ----
@@ -213,8 +214,9 @@ def main():
     else:
         print("WARNING: logs/idle.csv not found. Net power/energy will be blank.")
 
-    summary_files = sorted(LOGS_DIR.glob("summary_*_*.csv"))
-    power_files = {p.name: p for p in LOGS_DIR.glob("run_*_*.csv")}
+    summary_files = sorted(SUMMARY_DIR.glob("summary_*_*.csv"))
+    power_files = {p.name: p for p in POWER_DIR.glob("run_*_*.csv")}
+
 
     rows = []
 
@@ -296,6 +298,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
