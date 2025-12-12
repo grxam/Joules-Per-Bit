@@ -33,7 +33,7 @@ Python Libraries:
 ### Model Download
 1. Authenticate with Hugging Face and accept the model license
    ```
-   hf auth login
+   hf auth login <Access Code>
    ```
 2. Download model:
    ```
