@@ -43,3 +43,22 @@ Python Libraries:
    ```
    models/Meta-Llama-3-8B-Instruct-Q4_K_M.gguf
    ```
+### Executing Program
+1. Activate the virtual environment:
+   ```
+   . .\.venv\Scripts\Activate.ps1
+   ```
+2. Set required environment variables
+   ```
+   $env:LLAMA_MODEL_PATH="C:\path\to\models\Meta-Llama-3-8B-Instruct-Q4_K_M.gguf"
+   $env:LLAMA_OUT_DIR="logs"
+   ```
+3. Run the experiment:
+   ```
+   python experiment_protocol.py --run id 001 --mode A2B
+   ```
+#### Execution modes
+* ```A2B``` - Run A &rarr; B protocol
+* ```B2A``` - Run B &rarr; A protocol
+* ```BOTH``` - Run both protocols
+Output summaries are written to the specified output directory
