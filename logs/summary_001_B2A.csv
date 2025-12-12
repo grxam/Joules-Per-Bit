@@ -1,0 +1,3 @@
+run_id,mode,H_before_A2B_bits,H_after_A2B_bits,delta_H_A2B_bits,forced_token_A2B,top_token_after_A2B,top_token_p_after_A2B,H_before_B2A_bits,H_after_B2A_bits,delta_H_B2A_bits,forced_token_B2A,top_token_after_B2A,top_token_p_after_B2A,order_effect_bits
+001,B2A,,,,,,,3.3861701,3.1843612,-0.20180893, No,".
+",0.30232618256186794,
