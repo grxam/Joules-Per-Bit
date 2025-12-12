@@ -13,5 +13,11 @@ This project implements a framework for measuring how forced tokens affect the o
 ### Installation
 1. Clone the repository:
    ```
-   git clone
+   git clone https://github.com/grxam/Joules-Per-Bit
+   cd Joules-Per-Bit
+   ```
+2. Create and activate a virtual environment:
+   ```
+   python -m venv .venv
+   . .\.venv\Scripts\Activate.ps1
    ```
