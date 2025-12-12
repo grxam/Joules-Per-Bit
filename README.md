@@ -57,8 +57,21 @@ Python Libraries:
    ```
    python experiment_protocol.py --run id 001 --mode A2B
    ```
+
 #### Execution modes
 * ```A2B``` - Run A &rarr; B protocol
 * ```B2A``` - Run B &rarr; A protocol
 * ```BOTH``` - Run both protocols
 Output summaries are written to the specified output directory
+
+### Power Measurement (Intel Power Gadget)
+Power measurments were collected using Intel Power Gadget on Windows
+1. Download and install [Intel Power Gadget](https://web.archive.org/web/20230325112308/https://www.intel.com/content/www/us/en/developer/articles/tool/power-gadget.html)
+2. Verify installation in powershell:
+   ```
+   & "C:\Program Files\Intel\Power Gadget 3.6\Powerlog3.0.exe" -?
+   ```
+3. Run experiment with Intel Power Gadget:
+   ```
+   & "C:\Program Files\Intel\Power Gadget 3.6\PowerLog3.0.exe" -resolution 50 -file logs\run_001_A2B.csv -cmd "python experiment_protocol.py --run-id 001 --mode A2B"
+   ```
