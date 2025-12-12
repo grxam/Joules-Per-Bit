@@ -1,3 +1,47 @@
+"""
+experiment_protocol.py
+
+Implements an order-dependent forced-token intervention protocol for
+autoregressive language models using llama-cpp-python.
+
+This script measures how the entropy of a model’s next-token probability
+distribution changes when a specific token is forcibly injected into the
+generation context, and how that change depends on the order of intervention.
+Two execution orders are supported:
+
+    1. A to B: measure baseline entropy, force token A, then re-measure entropy
+    2. B to A: measure baseline entropy, force token B, then re-measure entropy
+
+For each order, the script computes:
+    - H_before: Shannon entropy (in bits) of the next-token distribution
+      prior to any intervention
+    - H_after: Shannon entropy (in bits) after the forced-token intervention
+    - dH: entropy difference (H_after − H_before)
+
+When both orders are executed, an order-effect metric is computed as:
+    order_effect = dH_A→B − dH_B→A
+
+Entropy is computed from the model’s top-K log-probabilities using natural
+logarithms converted to bits.
+
+The script produces one CSV summary file per run containing entropy metrics
+and minimal sanity-check information (forced token and top token after forcing).
+Power and energy measurements are not collected here and are expected to be
+captured externally (e.g., via Intel Power Gadget).
+
+Key characteristics:
+    - CPU-only execution
+    - Deterministic probing (temperature = 0)
+    - Explicit logit bias for forced-token insertion
+    - Order-separated experimental runs for reproducibility
+
+Outputs:
+    logs/summary_<RUN_ID>_<MODE>.csv
+
+Intended use:
+    Controlled experiments studying order effects, intervention asymmetry,
+    and entropy changes in large language models under forced-token conditions.
+"""
 from llama_cpp import Llama
 import math
 import os
@@ -228,6 +272,7 @@ write_summary(
 
 print("Finished run", RUN_ID, "MODE=", MODE)
 print("Wrote summary to", str(summary_path))
+
 
 
 
